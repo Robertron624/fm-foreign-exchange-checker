@@ -1,0 +1,21 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "npm install": true,
+        "printf": true,
+        "true": true,
+        "/^sed -n '60,85p' src/layouts/components/LiveMarkets\\.tsx; python3 - <<'PY'\nfrom pathlib import Path\np = Path\\('src/layouts/components/LiveMarkets\\.tsx'\\)\ns = p\\.read_text\\(\\)\nold = \"`https://api\\.frankfurter\\.dev/v1/\\$\\{date\\}\\?base=USD&symbols=EUR,GBP,JPY`\"\nnew = \"'https://api\\.frankfurter\\.dev/v1/' \\+ date \\+ '\\?base=USD&symbols=EUR,GBP,JPY'\"\nif old not in s:\n    raise SystemExit\\('Target interpolated market API URL not found'\\)\np\\.write_text\\(s\\.replace\\(old, new\\)\\)\nPY\nnpm run build$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 - <<'PY'\nfrom pathlib import Path\np = Path\\('src/layouts/components/LiveMarkets\\.tsx'\\)\ns = p\\.read_text\\(\\)\ns = s\\.replace\\(\"new Date\\(`\\$\\{date\\}T00:00:00Z'\\)\\)\", \"new Date\\(date \\+ 'T00:00:00Z'\\)\"\\)\np\\.write_text\\(s\\)\nPY\nnpm run build$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 - <<'PY'\nfrom pathlib import Path\np = Path\\('src/layouts/components/LiveMarkets\\.tsx'\\)\ns = p\\.read_text\\(\\)\\.replace\\(\"\\}\\)\\.format\\(new Date\\(date \\+ 'T00:00:00Z'\\);\", \"\\}\\)\\.format\\(new Date\\(date \\+ 'T00:00:00Z'\\)\\);\" \\)\np\\.write_text\\(s\\)\nPY\nnpm run build$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "npx tsc": true,
+        "astro": true
+    }
+}

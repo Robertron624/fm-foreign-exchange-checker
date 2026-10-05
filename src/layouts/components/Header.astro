@@ -1,32 +1,43 @@
+---
+import LiveMarkets from './LiveMarkets';
+---
+
 <header>
-	<a href="/">
-        <img class="header-logo" src="/images/logo.svg" alt="Foreign Exchange Checker Logo">
+  <div class="top-header">
+    <a href="/">
+      <img
+        class="header-logo"
+        src="/images/logo.svg"
+        alt="Foreign Exchange Checker Logo"
+      />
     </a>
-    <p class="header-feats">
-        55 · CURRENCIES EOD · ECB
-    </p>
+    <p class="header-feats">55 · CURRENCIES EOD · ECB</p>
+  </div>
+  <LiveMarkets client:load />
 </header>
 
 <style lang="scss">
-	header {
-		padding: 1rem;
-		text-align: center;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        
+  header {
+    text-align: center;
 
-        .header-logo {
-            max-width: 150px;
-            height: auto;
-            display: block;
-        }
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1rem;
 
-        .header-feats {
-            margin: 0;
-            font-size: .85rem;
-            color: var(--color-neutral-200);
-        }
-	}
+      .header-logo {
+        max-width: 107.15px;
+        height: auto;
+        display: block;
+      }
 
+      .header-feats {
+        margin: 0;
+        font-size: 0.625rem;
+        color: var(--color-neutral-200);
+      }
+    }
+
+  }
 </style>
