@@ -9,3 +9,11 @@ export const MARKETS = [
 
 export const REFRESH_INTERVAL = 15 * 60 * 1000;
 export const DAYS_OF_HISTORY = 7;
+
+export const CURRENCY_FLAGS: Record<string, string> = {
+  AUD: 'au', BRL: 'br', CAD: 'ca', CHF: 'ch', CNY: 'cn', CZK: 'cz', DKK: 'dk',
+  EUR: 'eu', GBP: 'gb', HKD: 'hk', HUF: 'hu', IDR: 'id', INR: 'in', ISK: 'is',
+  JPY: 'jp', KRW: 'kr', MXN: 'mx', MYR: 'my', NOK: 'no', NZD: 'nz', PHP: 'ph',
+  PLN: 'pl', RON: 'ro', SEK: 'se', SGD: 'sg', THB: 'th', TRY: 'tr', USD: 'us',
+  ZAR: 'za',
+};

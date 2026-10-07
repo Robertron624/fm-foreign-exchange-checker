@@ -1,0 +1,214 @@
+.currency-trader {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-neutral-50);
+  position: relative;
+  padding-inline: 1rem;
+  margin-top: 2rem;
+
+  .currency-trader__column {
+    background-color: var(--color-neutral-700);
+    padding: 1rem;
+    border-radius: 1.25rem; /* in rem is: 1.25rem */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .currency-trader__rows {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 1rem;
+    }
+    .currency-trader__current-rate {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-top: 1rem;
+
+      p {
+        margin: 0;
+        font-size: 0.625rem;
+        color: var(--color-neutral-50);
+      }
+
+      .buttons {
+        display: flex;
+        gap: 8px  ;
+        margin-top: 1rem;
+        font: inherit;
+
+        button {
+          padding: 8px 12px;
+          border-radius: 0.5rem;
+          font-size: 0.75rem; /* in px is 12px */
+          font-weight: 600; /* in px is 12px */
+          border: 1px solid var(--color-lime-500);
+          display:flex;
+          align-items: center;
+          cursor: pointer;
+
+          &.currency-trader__add-to-favorites {
+            background-color: var(--color-lime-500);
+            color: var(--color-neutral-900);
+            gap: 0.5rem;
+          }
+          &.currency-trader__log-conversion {
+            background-color: inherit;
+            color: var(--color-neutral-50);
+          }
+        }
+      }
+    }
+  }
+}
+
+.currency-trader__title {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+
+.currency-trader__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: var(--color-neutral-600);
+  border: 1px solid var(--color-neutral-500);
+}
+
+.currency-trader__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.currency-trader__label {
+  font-size: 0.75rem;
+  color: var(--color-neutral-200);
+}
+
+.currency-trader__amount {
+  font-size: 2rem;
+  font-weight: 600;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  width: 100%;
+  min-width: 0;
+  font-family: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &.received {
+    color: var(--color-lime-500);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-lime-500);
+    outline-offset: 2px;
+  }
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  -moz-appearance: textfield;
+}
+
+.currency-trader__swap {
+  align-self: center;
+  display: grid;
+  place-items: center;
+  margin-block: 1rem;
+  padding: 0.875rem;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--color-neutral-500);
+  cursor: pointer;
+  transition:
+    border-color 0.3s,
+    background-color 0.3s;
+
+  &:hover {
+    border-color: var(--color-lime-500);
+  }
+}
+
+.currency-trader__select {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.currency-trader__select-button,
+.currency-trader__option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  border: 0;
+}
+
+.currency-trader__select-button {
+  padding: 10px;
+  border-radius: 8px;
+  background-color: var(--color-neutral-500);
+
+  .currency-trader__currency {
+    font-size: 0.875rem; /* in px is 14px */
+  }
+}
+
+.currency-trader__flag {
+  border-radius: 50%;
+  object-fit: cover;
+  display: inline-block;
+}
+
+.currency-trader__options {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.25rem);
+  z-index: 10;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  max-height: 14rem;
+  overflow-y: auto;
+  border-radius: 0.75rem;
+  background-color: var(--color-neutral-500);
+  min-width: 7rem;
+}
+
+.currency-trader__option {
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  border-radius: 0.5rem;
+  background: none;
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--color-neutral-400);
+  }
+}
+
+.currency-trader__error {
+  margin: 0;
+  color: var(--color-red-500);
+  font-size: 0.875rem;
+
+  button {
+    color: var(--color-lime-500);
+    background: none;
+    border: 0;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
