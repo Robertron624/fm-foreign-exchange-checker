@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { CURRENCY_FLAGS, REFRESH_INTERVAL } from "../../constants";
-import type { LoadStatus } from "../../types";
+import { CURRENCY_FLAGS, REFRESH_INTERVAL } from "../constants";
+import type { LoadStatus } from "../types";
 import "./CurrencyTrader.scss";
-import { FilledStarIcon } from "../../components/Icons";
+import { FilledStarIcon } from "./Icons";
 
 type Rates = Record<string, number>;
 

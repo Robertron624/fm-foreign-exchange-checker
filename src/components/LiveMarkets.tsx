@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { MARKETS, REFRESH_INTERVAL, DAYS_OF_HISTORY } from '../../constants';
-import type { LoadStatus, Market } from '../../types';
+import { MARKETS, REFRESH_INTERVAL, DAYS_OF_HISTORY } from '../constants';
+import type { LoadStatus, Market } from '../types';
 import './LiveMarkets.scss';
 
 const CURRENCIES = [...new Set(MARKETS.flatMap(({ base, quote }) => [base, quote]))]
