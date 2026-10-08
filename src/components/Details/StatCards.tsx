@@ -10,6 +10,7 @@ export default function StatCards({ points }: Props) {
   const pct = hasData && first !== 0 ? (change / first) * 100 : 0;
   const tone = change < 0 ? 'down' : 'up';
   const sign = change >= 0 ? '+' : '';
+  const direction = change >= 0 ? '▲' : '▼';
 
   return (
     <div className="details__stats">
@@ -30,7 +31,7 @@ export default function StatCards({ points }: Props) {
       <div className="details__stat">
         <span className="details__stat-label">% CHANGE</span>
         <span className={`details__stat-value details__stat-value--${tone}`}>
-          {hasData ? `${change >= 0 ? '▲' : '▼'} ${sign}${pct.toFixed(2)}%` : '—'}
+          {hasData ? `${direction} ${sign}${pct.toFixed(2)}%` : '—'}
         </span>
       </div>
     </div>

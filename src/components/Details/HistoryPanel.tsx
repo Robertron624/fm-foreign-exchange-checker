@@ -23,7 +23,7 @@ export default function HistoryPanel({ base, quote }: Props) {
     const start = new Date(end.getTime() - Math.max(days, 5) * 86_400_000);
     setStatus('loading');
 
-    (async () => {
+    void (async () => {
       try {
         const res = await fetch(
           `https://api.frankfurter.dev/v1/${toISO(start)}..${toISO(end)}?base=${base}&symbols=${quote}`,

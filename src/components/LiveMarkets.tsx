@@ -86,6 +86,7 @@ export default function LiveMarkets() {
               <span className="market-quote__pair">{market.label}</span>
               <strong className="market-quote__rate">{formatRate(rate, market)}</strong>
               <span className="market-quote__change" aria-label={changeLabel}>
+                <span aria-hidden="true">{change >= 0 ? '▲' : '▼'}</span>{' '}
                 {change >= 0 ? '+' : ''}
                 {change.toFixed(2)}%
               </span>

@@ -45,7 +45,7 @@ export default function HistoryChart({ pair, points, status }: Props) {
   const line = points.map((p, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(p.value).toFixed(1)}`).join(' ');
   const area = `${line} L${x(points.length - 1)},${H} L${x(0)},${H} Z`;
   const last = points.at(-1)!;
-  const labelIdx = [0, 0.5, 1].map((r) => Math.round(r * (points.length - 1)));
+  const labelIdx = [0, 0.25, 0.5, 0.75, 1].map((r) => Math.round(r * (points.length - 1)));
 
   return (
     <div className="details__chart">
@@ -82,8 +82,8 @@ export default function HistoryChart({ pair, points, status }: Props) {
             <path d={line} className="details__line" vectorEffect="non-scaling-stroke" />
           </svg>
           <ul className="details__x-axis" aria-hidden="true">
-            {labelIdx.map((i) => (
-              <li key={i}>{formatDate(points[i].date)}</li>
+            {labelIdx.map((i, n) => (
+              <li key={n} className={n % 2 ? 'details__x-extra' : undefined}>{formatDate(points[i].date)}</li>
             ))}
           </ul>
         </div>

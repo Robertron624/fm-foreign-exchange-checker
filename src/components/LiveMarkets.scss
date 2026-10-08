@@ -89,7 +89,9 @@ s
 }
 
 .market-quote__change {
-  grid-column: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
   color: var(--color-green-500);
   text-align: right;
 }
