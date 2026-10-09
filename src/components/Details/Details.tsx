@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './Details.scss';
+import ComparePanel from './ComparePanel';
 import HistoryPanel from './HistoryPanel';
+import { useFavorites } from './hooks/useFavorites';
 import TabSelector from './TabSelector';
 import { TABS, type TabId } from './types';
 
@@ -8,6 +10,7 @@ type Props = Readonly<{ base?: string; quote?: string }>;
 
 export default function Details({ base = 'USD', quote = 'EUR' }: Props) {
   const [tab, setTab] = useState<TabId>('history');
+  const { favorites, toggle } = useFavorites();
 
   return (
     <section className="details" aria-label="Details">
@@ -24,6 +27,9 @@ export default function Details({ base = 'USD', quote = 'EUR' }: Props) {
         >
           {t.id === 'history' && tab === 'history' && (
             <HistoryPanel base={base} quote={quote} />
+          )}
+          {t.id === 'compare' && tab === 'compare' && (
+            <ComparePanel base={base} favorites={favorites} onToggleFavorite={toggle} />
           )}
         </div>
       ))}
