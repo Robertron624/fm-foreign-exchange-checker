@@ -17,5 +17,8 @@
         },
         "npx tsc": true,
         "astro": true
-    }
+    },
+    "cSpell.words": [
+        "nums"
+    ]
 }

@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import { CURRENCY_FLAGS, REFRESH_INTERVAL } from "../constants";
-import type { LoadStatus } from "../types";
+import { useRef, useState } from "react";
+import { CURRENCY_FLAGS } from "../constants";
+import { useClickOutside } from "../hooks/useClickOutside";
+import { useLatestRates } from "../hooks/useLatestRates";
 import "./CurrencyTrader.scss";
 import { FilledStarIcon } from "./Icons";
-
-type Rates = Record<string, number>;
 
 function Flag({ code }: Readonly<{ code: string }>) {
   const flag = CURRENCY_FLAGS[code];
@@ -54,14 +53,7 @@ function CurrencySelect({
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!open) return;
-    const close = (e: MouseEvent) => {
-      if (!ref.current?.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener("mousedown", close);
-    return () => document.removeEventListener("mousedown", close);
-  }, [open]);
+  useClickOutside(ref, open, () => setOpen(false));
 
   return (
     <div className="currency-trader__select" ref={ref}>
@@ -111,14 +103,6 @@ function CurrencySelect({
   );
 }
 
-export default function CurrencyTrader() {
-  const [rates, setRates] = useState<Rates>({});
-  const [status, setStatus] = useState<LoadStatus>("loading");
-  const [retry, setRetry] = useState(0);
-  const [amount, setAmount] = useState("1000");
-  const [from, setFrom] = useState("USD");
-  const [to, setTo] = useState("EUR");
-
   function handleAddToFavorites() {
     // Implement the logic to add the current currency pair to favorites
   }
@@ -127,31 +111,14 @@ export default function CurrencyTrader() {
     // Implement the logic to log the current conversion
   }
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const load = async () => {
-      try {
-        const res = await fetch(
-          "https://api.frankfurter.dev/v1/latest?base=USD",
-          { signal: controller.signal },
-        );
-        if (!res.ok) throw new Error(String(res.status));
-        const data = await res.json();
-        setRates({ USD: 1, ...data.rates });
-        setStatus("ready");
-      } catch (err) {
-        console.error(err);
-        if (!controller.signal.aborted)
-          setStatus((s) => (s === "ready" ? s : "error"));
-      }
-    };
-    load();
-    const timer = setInterval(load, REFRESH_INTERVAL);
-    return () => {
-      controller.abort();
-      clearInterval(timer);
-    };
-  }, [retry]);
+
+export default function CurrencyTrader() {
+  const { rates, status, retry } = useLatestRates();
+  const [amount, setAmount] = useState("1000");
+  const [from, setFrom] = useState("USD");
+  const [to, setTo] = useState("EUR");
+
+
 
   const currencies = Object.keys(rates).sort((a, b) => a.localeCompare(b));
   const parsed = Number.parseFloat(amount);
@@ -265,10 +232,7 @@ export default function CurrencyTrader() {
           Couldn't load rates.{" "}
           <button
             type="button"
-            onClick={() => {
-              setStatus("loading");
-              setRetry((r) => r + 1);
-            }}
+            onClick={retry}
           >
             Retry
           </button>
