@@ -109,9 +109,27 @@
     background: var(--color-neutral-700);
     border: 1px solid var(--color-neutral-600);
     border-radius: 0.5rem;
+    position: relative;
+  }
+
+  .details__range-pill {
+    position: absolute;
+    top: 0.25rem;
+    bottom: 0.25rem;
+    left: 0;
+    background: var(--color-neutral-500);
+    border-radius: 0.5rem;
+    transition:
+      transform 250ms ease,
+      width 250ms ease;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   }
 
   .details__range {
+    position: relative;
     font: inherit;
     font-size: 0.75rem;
     padding: 0.75rem 1rem; /* 12px in rem is: 0.75rem */
@@ -121,8 +139,9 @@
     cursor: pointer;
     border: none;
 
+    transition: color 250ms ease;
+
     &[aria-pressed="true"] {
-      background: var(--color-neutral-500);
       color: var(--color-neutral-50);
     }
   }

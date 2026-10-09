@@ -22,7 +22,8 @@ function formatDate(date: string) {
 export default function HistoryChart({ pair, points, status }: Props) {
   const gradientId = useId();
 
-  if (status !== 'ready' || points.length < 2) {
+  const showStale = status === 'loading' && points.length >= 2;
+  if (!showStale && (status !== 'ready' || points.length < 2)) {
     return (
       <div className="details__chart details__chart--empty">
         <p>
@@ -83,7 +84,7 @@ export default function HistoryChart({ pair, points, status }: Props) {
           </svg>
           <ul className="details__x-axis" aria-hidden="true">
             {labelIdx.map((i, n) => (
-              <li key={n} className={n % 2 ? 'details__x-extra' : undefined}>{formatDate(points[i].date)}</li>
+              <li key={`label-${i}`} className={n % 2 ? 'details__x-extra' : undefined}>{formatDate(points[i].date)}</li>
             ))}
           </ul>
         </div>
