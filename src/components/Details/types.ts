@@ -2,7 +2,7 @@ export const TABS = [
   { id: 'history', label: 'History' },
   { id: 'compare', label: 'Compare' },
   { id: 'favorites', label: 'Favorites' },
-  { id: 'change', label: '% Change' },
+  { id: 'log', label: 'Log' },
 ] as const;
 
 export type TabId = (typeof TABS)[number]['id'];

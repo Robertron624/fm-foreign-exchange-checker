@@ -4,9 +4,15 @@ type Props = Readonly<{
   value: TabId;
   onChange: (tab: TabId) => void;
   favoritesCount?: number;
+  logCount?: number;
 }>;
 
-export default function TabSelector({ value, onChange, favoritesCount }: Props) {
+export default function TabSelector({ value, onChange, favoritesCount, logCount }: Props) {
+  const counts: Partial<Record<TabId, number | undefined>> = {
+    favorites: favoritesCount,
+    log: logCount,
+  };
+  const selectedCount = counts[value];
   return (
     <>
       <div className="details__select-wrap">
@@ -22,9 +28,9 @@ export default function TabSelector({ value, onChange, favoritesCount }: Props) 
             </option>
           ))}
         </select>
-        {value === 'favorites' && favoritesCount !== undefined && (
+        {selectedCount !== undefined && (
           <span className="details__badge" aria-hidden="true">
-            {favoritesCount}
+            {selectedCount}
           </span>
         )}
       </div>
@@ -42,8 +48,8 @@ export default function TabSelector({ value, onChange, favoritesCount }: Props) 
             onClick={() => onChange(tab.id)}
           >
             {tab.label.toUpperCase()}
-            {tab.id === 'favorites' && favoritesCount !== undefined && (
-              <span className="details__badge">{favoritesCount}</span>
+            {counts[tab.id] !== undefined && (
+              <span className="details__badge">{counts[tab.id]}</span>
             )}
           </button>
         ))}

@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { CURRENCY_FLAGS } from "../constants";
 import { useClickOutside } from "../hooks/useClickOutside";
+import { useConversionLog } from "../hooks/useConversionLog";
 import { pairKey, useFavorites } from "../hooks/useFavorites";
 import { useLatestRates } from "../hooks/useLatestRates";
 import "./CurrencyTrader.scss";
@@ -104,10 +105,6 @@ function CurrencySelect({
   );
 }
 
-  function handleLogConversion() {
-    // Implement the logic to log the current conversion
-  }
-
 
 export default function CurrencyTrader() {
   const { rates, status, retry } = useLatestRates();
@@ -116,6 +113,7 @@ export default function CurrencyTrader() {
   const [to, setTo] = useState("EUR");
   const { favorites, toggle } = useFavorites();
   const isFavorite = favorites.includes(pairKey(from, to));
+  const { add: addLog } = useConversionLog();
 
 
 
@@ -133,6 +131,11 @@ export default function CurrencyTrader() {
       : new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(
           result,
         );
+
+  const handleLogConversion = () => {
+    if (result === null) return;
+    addLog({ from, to, amount: parsed, result });
+  };
 
   const swap = () => {
     setFrom(to);
