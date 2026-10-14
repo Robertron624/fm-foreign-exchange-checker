@@ -2,7 +2,8 @@ import { useState } from 'react';
 import './Details.scss';
 import ComparePanel from './ComparePanel';
 import HistoryPanel from './HistoryPanel';
-import { useFavorites } from './hooks/useFavorites';
+import FavoritesPanel from './FavoritesPanel';
+import { useFavorites } from '../../hooks/useFavorites';
 import TabSelector from './TabSelector';
 import { TABS, type TabId } from './types';
 
@@ -14,7 +15,7 @@ export default function Details({ base = 'USD', quote = 'EUR' }: Props) {
 
   return (
     <section className="details" aria-label="Details">
-      <TabSelector value={tab} onChange={setTab} />
+      <TabSelector value={tab} onChange={setTab} favoritesCount={favorites.length} />
 
       {TABS.map((t) => (
         <div
@@ -30,6 +31,9 @@ export default function Details({ base = 'USD', quote = 'EUR' }: Props) {
           )}
           {t.id === 'compare' && tab === 'compare' && (
             <ComparePanel base={base} favorites={favorites} onToggleFavorite={toggle} />
+          )}
+          {t.id === 'favorites' && tab === 'favorites' && (
+            <FavoritesPanel favorites={favorites} onToggleFavorite={toggle} />
           )}
         </div>
       ))}

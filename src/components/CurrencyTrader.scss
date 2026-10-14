@@ -49,9 +49,14 @@
           cursor: pointer;
 
           &.currency-trader__add-to-favorites {
-            background-color: var(--color-lime-500);
-            color: var(--color-neutral-900);
+            background-color: inherit;
+            color: var(--color-lime-500);
             gap: 0.5rem;
+
+            &[aria-pressed="true"] {
+              background-color: var(--color-lime-500);
+              color: var(--color-neutral-900);
+            }
           }
           &.currency-trader__log-conversion {
             background-color: inherit;

@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
 import { CURRENCY_FLAGS } from "../constants";
 import { useClickOutside } from "../hooks/useClickOutside";
+import { pairKey, useFavorites } from "../hooks/useFavorites";
 import { useLatestRates } from "../hooks/useLatestRates";
 import "./CurrencyTrader.scss";
-import { FilledStarIcon } from "./Icons";
+import { FilledStarIcon, OutlineStarIcon } from "./Icons";
 
 function Flag({ code }: Readonly<{ code: string }>) {
   const flag = CURRENCY_FLAGS[code];
@@ -103,10 +104,6 @@ function CurrencySelect({
   );
 }
 
-  function handleAddToFavorites() {
-    // Implement the logic to add the current currency pair to favorites
-  }
-
   function handleLogConversion() {
     // Implement the logic to log the current conversion
   }
@@ -117,6 +114,8 @@ export default function CurrencyTrader() {
   const [amount, setAmount] = useState("1000");
   const [from, setFrom] = useState("USD");
   const [to, setTo] = useState("EUR");
+  const { favorites, toggle } = useFavorites();
+  const isFavorite = favorites.includes(pairKey(from, to));
 
 
 
@@ -212,10 +211,15 @@ export default function CurrencyTrader() {
             <button
               className="currency-trader__add-to-favorites"
               type="button"
-              onClick={handleAddToFavorites}
+              aria-pressed={isFavorite}
+              onClick={() => toggle(pairKey(from, to))}
             >
-              <FilledStarIcon fillColor="var(--color-neutral-900)" width={16} height={16} />
-              FAVORITED
+              {isFavorite ? (
+                <FilledStarIcon fillColor="var(--color-neutral-900)" width={16} height={16} />
+              ) : (
+                <OutlineStarIcon strokeColor="var(--color-lime-500)" width={16} height={16} />
+              )}
+              {isFavorite ? "FAVORITED" : "FAVORITE"}
             </button>
             <button
               className="currency-trader__log-conversion"

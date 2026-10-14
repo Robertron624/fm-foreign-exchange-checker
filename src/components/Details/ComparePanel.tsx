@@ -1,4 +1,5 @@
 import { CURRENCY_FLAGS } from '../../constants';
+import { pairKey } from '../../hooks/useFavorites';
 import { FilledStarIcon, OutlineStarIcon } from '../Icons';
 import { useMultiCurrencyRates } from './hooks/useMultiCurrencyRates';
 
@@ -53,7 +54,8 @@ export default function ComparePanel({ base, favorites, onToggleFavorite }: Prop
         <ul className="details__compare-list" aria-busy={status === 'loading'}>
           {PAIRS.map(({ code, name }) => {
             const rate = rates[code];
-            const isFavorite = favorites.includes(code);
+            const pair = pairKey(base, code);
+            const isFavorite = favorites.includes(pair);
             const flag = CURRENCY_FLAGS[code];
             return (
               <li key={code} className="details__compare-item">
@@ -82,8 +84,8 @@ export default function ComparePanel({ base, favorites, onToggleFavorite }: Prop
                   type="button"
                   className="details__compare-fav"
                   aria-pressed={isFavorite}
-                  aria-label={`${isFavorite ? 'Remove' : 'Add'} ${code} ${isFavorite ? 'from' : 'to'} favorites`}
-                  onClick={() => onToggleFavorite(code)}
+                  aria-label={`${isFavorite ? 'Remove' : 'Add'} ${base} to ${code} ${isFavorite ? 'from' : 'to'} favorites`}
+                  onClick={() => onToggleFavorite(pair)}
                 >
                   {isFavorite ? (
                     <FilledStarIcon fillColor="var(--color-lime-500)" />

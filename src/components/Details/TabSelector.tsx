@@ -1,8 +1,12 @@
 import { TABS, type TabId } from './types';
 
-type Props = Readonly<{ value: TabId; onChange: (tab: TabId) => void }>;
+type Props = Readonly<{
+  value: TabId;
+  onChange: (tab: TabId) => void;
+  favoritesCount?: number;
+}>;
 
-export default function TabSelector({ value, onChange }: Props) {
+export default function TabSelector({ value, onChange, favoritesCount }: Props) {
   return (
     <>
       <div className="details__select-wrap">
@@ -18,6 +22,11 @@ export default function TabSelector({ value, onChange }: Props) {
             </option>
           ))}
         </select>
+        {value === 'favorites' && favoritesCount !== undefined && (
+          <span className="details__badge" aria-hidden="true">
+            {favoritesCount}
+          </span>
+        )}
       </div>
 
       <div className="details__tabs" role="tablist" aria-label="Details sections">
@@ -33,6 +42,9 @@ export default function TabSelector({ value, onChange }: Props) {
             onClick={() => onChange(tab.id)}
           >
             {tab.label.toUpperCase()}
+            {tab.id === 'favorites' && favoritesCount !== undefined && (
+              <span className="details__badge">{favoritesCount}</span>
+            )}
           </button>
         ))}
       </div>
