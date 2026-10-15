@@ -1,3 +1,5 @@
+import { useCallback, useRef, useState } from 'react';
+import { useClickOutside } from '../../hooks/useClickOutside';
 import { TABS, type TabId } from './types';
 
 type Props = Readonly<{
@@ -13,25 +15,54 @@ export default function TabSelector({ value, onChange, favoritesCount, logCount 
     log: logCount,
   };
   const selectedCount = counts[value];
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const close = useCallback(() => setOpen(false), []);
+  useClickOutside(wrapRef, open, close);
   return (
     <>
-      <div className="details__select-wrap">
-        <select
+      <div
+        className="details__select-wrap"
+        ref={wrapRef}
+        onKeyDown={(e) => e.key === 'Escape' && setOpen(false)}
+      >
+        <button
+          type="button"
           className="details__select"
+          aria-haspopup="listbox"
+          aria-expanded={open}
           aria-label="Details section"
-          value={value}
-          onChange={(e) => onChange(e.target.value as TabId)}
+          onClick={() => setOpen((o) => !o)}
         >
-          {TABS.map((tab) => (
-            <option key={tab.id} value={tab.id}>
-              {tab.label.toUpperCase()}
-            </option>
-          ))}
-        </select>
-        {selectedCount !== undefined && (
-          <span className="details__badge" aria-hidden="true">
-            {selectedCount}
-          </span>
+          <span>{TABS.find((t) => t.id === value)?.label.toUpperCase()}</span>
+          {selectedCount !== undefined && (
+            <span className="details__badge" aria-hidden="true">
+              {selectedCount}
+            </span>
+          )}
+        </button>
+        {open && (
+          <ul className="details__menu" role="listbox" aria-label="Details section">
+            {TABS.map((tab) => (
+              <li key={tab.id} role="presentation">
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={value === tab.id}
+                  className="details__menu-item"
+                  onClick={() => {
+                    onChange(tab.id);
+                    setOpen(false);
+                  }}
+                >
+                  <span>{tab.label.toUpperCase()}</span>
+                  {counts[tab.id] !== undefined && (
+                    <span className="details__badge">{counts[tab.id]}</span>
+                  )}
+                </button>
+              </li>
+            ))}
+          </ul>
         )}
       </div>
 
