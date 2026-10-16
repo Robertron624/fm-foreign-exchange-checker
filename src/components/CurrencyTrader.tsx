@@ -1,26 +1,11 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { CURRENCY_FLAGS } from "../constants";
-import { useClickOutside } from "../hooks/useClickOutside";
+import CurrencySelect from "./CurrencyPicker";
 import { useConversionLog } from "../hooks/useConversionLog";
 import { pairKey, useFavorites } from "../hooks/useFavorites";
 import { useLatestRates } from "../hooks/useLatestRates";
 import "./CurrencyTrader.scss";
 import { FilledStarIcon, OutlineStarIcon } from "./Icons";
-
-function Flag({ code }: Readonly<{ code: string }>) {
-  const flag = CURRENCY_FLAGS[code];
-  if (!flag)
-    return <span className="currency-trader__flag" aria-hidden="true" />;
-  return (
-    <img
-      className="currency-trader__flag"
-      src={`/images/flags/${flag}.webp`}
-      alt=""
-      width={20}
-      height={20}
-    />
-  );
-}
 
 function DashedBorder() {
   const dashLength = 10;
@@ -41,71 +26,6 @@ function DashedBorder() {
   );
 }
 
-function CurrencySelect({
-  value,
-  options,
-  label,
-  onChange,
-}: Readonly<{
-  value: string;
-  options: string[];
-  label: string;
-  onChange: (c: string) => void;
-}>) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useClickOutside(ref, open, () => setOpen(false));
-
-  return (
-    <div className="currency-trader__select" ref={ref}>
-      <button
-        type="button"
-        className="currency-trader__select-button"
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        aria-label={`${label} currency: ${value}`}
-        onClick={() => setOpen((o) => !o)}
-        onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
-      >
-        <Flag code={value} />
-        <span className="currency-trader__currency">{value}</span>
-        <img
-          src="/images/icon-chevron-down.svg"
-          alt=""
-          width={12}
-          height={12}
-        />
-      </button>
-      {open && (
-        <ul
-          className="currency-trader__options"
-          role="listbox"
-          aria-label={`${label} currency`}
-        >
-          {options.map((c) => (
-            <li key={c} role="option" aria-selected={c === value}>
-              <button
-                type="button"
-                className="currency-trader__option"
-                onClick={() => {
-                  onChange(c);
-                  setOpen(false);
-                }}
-                onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
-              >
-                <Flag code={c} />
-                <span className="currency-trader__currency">{c}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-}
-
-
 export default function CurrencyTrader() {
   const { rates, status, retry } = useLatestRates();
   const [amount, setAmount] = useState("1000");
@@ -117,7 +37,7 @@ export default function CurrencyTrader() {
 
 
 
-  const currencies = Object.keys(rates).sort((a, b) => a.localeCompare(b));
+  const currencies = Object.keys(rates).filter((c) => c in CURRENCY_FLAGS).sort((a, b) => a.localeCompare(b));
   const parsed = Number.parseFloat(amount);
   const rateFrom = rates[from];
   const rateTo = rates[to];

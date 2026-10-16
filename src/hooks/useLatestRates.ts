@@ -19,12 +19,13 @@ export function useLatestRates() {
     const controller = new AbortController();
     const load = async () => {
       try {
-        const res = await fetch('https://api.frankfurter.dev/v1/latest?base=USD', {
+        // Broader coverage than Frankfurter (e.g. AED, ARS, BDT).
+        const res = await fetch('https://open.er-api.com/v6/latest/USD', {
           signal: controller.signal,
         });
         if (!res.ok) throw new Error(String(res.status));
         const data = await res.json();
-        setRates({ USD: 1, ...data.rates });
+        setRates({ ...data.rates, USD: 1 });
         setStatus('ready');
       } catch (err) {
         console.error(err);

@@ -16,4 +16,10 @@ export const CURRENCY_FLAGS: Record<string, string> = {
   JPY: 'jp', KRW: 'kr', MXN: 'mx', MYR: 'my', NOK: 'no', NZD: 'nz', PHP: 'ph',
   PLN: 'pl', RON: 'ro', SEK: 'se', SGD: 'sg', THB: 'th', TRY: 'tr', USD: 'us',
   ZAR: 'za',
+  AED: 'ae', ARS: 'ar', BGN: 'bg', BHD: 'bh', CLP: 'cl', COP: 'co', EGP: 'eg', HNL: 'hn',
+  HTG: 'ht', JOD: 'jo', KES: 'ke', KWD: 'kw', LBP: 'lb', LKR: 'lk', MAD: 'ma', NGN: 'ng',
+  NPR: 'np', OMR: 'om', PEN: 'pe', PKR: 'pk', QAR: 'qa', RUB: 'ru', SAR: 'sa', TWD: 'tw',
+  UAH: 'ua', VND: 'vn',
 };
+
+export const POPULAR_CURRENCIES = ['USD', 'EUR', 'GBP'] as const;

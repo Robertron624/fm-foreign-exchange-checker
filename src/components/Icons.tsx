@@ -1,3 +1,5 @@
+import { CURRENCY_FLAGS } from "../constants";
+
 export function FilledStarIcon({ fillColor, width, height }: Readonly<{ fillColor: string; width?: number; height?: number }>) {
   return (
     <svg
@@ -32,5 +34,20 @@ export function OutlineStarIcon({ strokeColor, width, height }: Readonly<{ strok
         d="M7.332 2.41c.281-.562 1.078-.538 1.336 0l1.547 3.118 3.422.492c.61.094.843.844.398 1.29l-2.46 2.413.585 3.399c.094.61-.562 1.078-1.101.797l-3.047-1.617-3.07 1.617c-.54.28-1.196-.188-1.102-.797l.586-3.399L1.965 7.31c-.446-.445-.211-1.195.398-1.289l3.446-.492z"
       />
     </svg>
+  );
+}
+
+export function Flag({ code }: Readonly<{ code: string }>) {
+  const flag = CURRENCY_FLAGS[code];
+  if (!flag)
+    return <span className="currency-trader__flag" aria-hidden="true" />;
+  return (
+    <img
+      className="currency-trader__flag"
+      src={`/images/flags/${flag}.webp`}
+      alt=""
+      width={20}
+      height={20}
+    />
   );
 }
