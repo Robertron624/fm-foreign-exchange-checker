@@ -97,6 +97,10 @@
 .currency-trader__label {
   font-size: 0.75rem;
   color: var(--color-neutral-200);
+
+  @include tablet {
+    font-size: 0.875rem;
+  }
 }
 
 .currency-trader__amount {

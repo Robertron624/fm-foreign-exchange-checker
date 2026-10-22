@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import { useClickOutside } from '../../hooks/useClickOutside';
+import { useSlidingPill } from './hooks/useSlidingPill';
 import { TABS, type TabId } from './types';
 
 type Props = Readonly<{
@@ -17,6 +18,7 @@ export default function TabSelector({ value, onChange, favoritesCount, logCount 
   const selectedCount = counts[value];
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
+  const { registerItem, pillStyle } = useSlidingPill(value);
   const close = useCallback(() => setOpen(false), []);
   useClickOutside(wrapRef, open, close);
   return (
@@ -44,7 +46,7 @@ export default function TabSelector({ value, onChange, favoritesCount, logCount 
         {open && (
           <ul className="details__menu" role="listbox" aria-label="Details section">
             {TABS.map((tab) => (
-              <li key={tab.id} role="presentation">
+              <li key={tab.id}>
                 <button
                   type="button"
                   role="option"
@@ -67,9 +69,11 @@ export default function TabSelector({ value, onChange, favoritesCount, logCount 
       </div>
 
       <div className="details__tabs" role="tablist" aria-label="Details sections">
+        {pillStyle && <span className="details__tab-indicator" aria-hidden="true" style={pillStyle} />}
         {TABS.map((tab) => (
           <button
             key={tab.id}
+            ref={registerItem(tab.id)}
             id={`details-tab-${tab.id}`}
             type="button"
             role="tab"

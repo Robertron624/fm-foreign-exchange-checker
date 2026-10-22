@@ -29,6 +29,10 @@
   .live-markets__title-text {
     font-weight: 600;
     color: var(--color-neutral-500);
+
+    @include tablet {
+      font-size: 0.75rem;
+    }
   }
 
   .live-markets__status-dot {
@@ -74,6 +78,11 @@
   gap: 10px;
   border-left: 2px solid var(--color-neutral-300);
   font-variant-numeric: tabular-nums;
+  font-size: 0.625rem;
+
+  @include tablet {
+    font-size: 0.75rem;
+  }
 
   &:first-of-type {
     border-left: none;
@@ -128,22 +137,6 @@
 @keyframes market-pulse {
   50% {
     opacity: 0.4;
-  }
-}
-
-@media (max-width: 640px) {
-  .live-markets {
-    align-items: flex-start;
-  }
-
-  .live-markets__heading {
-    flex-basis: auto;
-    grid-template-columns: auto auto;
-    align-items: baseline;
-  }
-
-  .market-quotes {
-    width: 100%;
   }
 }
 

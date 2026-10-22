@@ -44,6 +44,22 @@
     display: none;
     gap: 1.5rem;
     border-bottom: 1px solid var(--color-neutral-600);
+    position: relative;
+  }
+
+  .details__tab-indicator {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    background: var(--color-lime-500);
+    transition:
+      transform 250ms ease,
+      width 250ms ease;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   }
 
   .details__tab {
@@ -53,12 +69,11 @@
     padding: 0.75rem 0;
     background: none;
     color: var(--color-neutral-200);
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
+    border: none;
+    cursor: pointer;
 
     &[aria-selected="true"] {
       color: var(--color-neutral-50);
-      border-bottom-color: var(--color-neutral-50);
     }
   }
 
@@ -659,7 +674,7 @@
     }
   }
 
-  @media (min-width: 640px) {
+  @include tablet {
     .details__x-extra {
       display: list-item;
     }

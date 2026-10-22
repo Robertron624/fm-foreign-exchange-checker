@@ -14,3 +14,18 @@ $color-lime-800: #283300;
 $color-green-500: #42eb05;
 
 $color-red-500: #ff4141;
+$breakpoint-tablet: 40rem; // 640px
+$breakpoint-desktop: 90rem; // 1440px
+
+// Mobile-first: mobile is the base, no mixin needed
+@mixin tablet {
+  @media (min-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $breakpoint-desktop) {
+    @content;
+  }
+}

@@ -27,15 +27,23 @@ import LiveMarkets from '../../components/LiveMarkets';
       padding: 1rem 1rem;
 
       .header-logo {
-        max-width: 107.15px;
+        max-width: 6.697rem;
         height: auto;
         display: block;
+
+        @include tablet {
+          max-width: 8.6875rem;
+        }
       }
 
       .header-feats {
         margin: 0;
         font-size: 0.625rem;
         color: var(--color-neutral-200);
+
+        @include tablet {
+          font-size: 0.875rem;
+        }
       }
     }
 
