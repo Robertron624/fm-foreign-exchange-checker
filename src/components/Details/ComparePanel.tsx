@@ -36,12 +36,12 @@ export default function ComparePanel({ base, favorites, onToggleFavorite }: Prop
 
   return (
     <div className="details__compare">
-      <header className="details__compare-header">
+      <div className="details__compare-header">
         <p className="details__compare-title">
           <span className='multi-currency-title'>MULTI-CURRENCY</span> {money.format(AMOUNT).replace('.00', '')} FROM {base}
         </p>
         <p className="details__compare-count">{PAIRS.length} PAIRS</p>
-      </header>
+      </div>
 
       {status === 'error' ? (
         <div className="details__compare-error" role="alert">
