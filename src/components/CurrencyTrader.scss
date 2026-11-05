@@ -44,7 +44,7 @@
 
       .buttons {
         display: flex;
-        gap: 8px  ;
+        gap: 8px;
         margin-top: 1rem;
         font: inherit;
 
@@ -52,9 +52,9 @@
           padding: 8px 12px;
           border-radius: 0.5rem;
           font-size: 0.75rem; /* in px is 12px */
-          font-weight: 600; /* in px is 12px */
+          font-weight: 500; /* in px is 12px */
           border: 1px solid var(--color-lime-500);
-          display:flex;
+          display: flex;
           align-items: center;
           cursor: pointer;
 
@@ -62,15 +62,38 @@
             background-color: inherit;
             color: var(--color-lime-500);
             gap: 0.5rem;
+            transition: opacity linear 0.3s;
 
             &[aria-pressed="true"] {
               background-color: var(--color-lime-500);
               color: var(--color-neutral-900);
+
+              &:hover {
+                opacity: 0.8;
+              }
+            }
+
+            &:focus-visible {
+              outline: 2px solid var(--color-lime-500);
+              outline-offset: 2px;
             }
           }
           &.currency-trader__log-conversion {
             background-color: inherit;
             color: var(--color-neutral-50);
+            transition:
+              background-color 0.3s,
+              color 0.3s;
+
+            &:hover {
+              background-color: var(--color-lime-800);
+            }
+
+            &:focus-visible {
+              outline: 2px solid var(--color-lime-500);
+              outline-offset: 2px;
+              margin-left: 4px;
+            }
           }
         }
       }
@@ -136,6 +159,7 @@
   min-width: 0;
   font-family: inherit;
   overflow: hidden;
+  border-radius: 0.5rem;
 
   &.received {
     color: var(--color-lime-500);
@@ -146,8 +170,8 @@
     &::-webkit-scrollbar {
       display: none;
     }
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 
   &:focus-visible {
@@ -165,7 +189,6 @@
   @include tablet {
     max-width: 141px;
   }
-
 }
 
 .currency-trader__swap {
@@ -175,19 +198,25 @@
   margin-block: 1rem;
   padding: 0.875rem;
   border-radius: 8px;
-  border: none;
-  background-color: var(--color-neutral-500);
+  border: 1px solid var(--color-neutral-500);
+  background-color: var(--color-neutral-600);
   cursor: pointer;
   transition:
     border-color 0.3s,
     background-color 0.3s;
 
-    @include tablet {
-      margin-block: 0;
-    }
+  @include tablet {
+    margin-block: 0;
+  }
 
   &:hover {
-    border-color: var(--color-lime-500);
+    background-color: var(--color-neutral-500);
+    border-color: var(--color-neutral-400);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-lime-500);
+    outline-offset: 2px;
   }
 }
 
@@ -203,13 +232,27 @@
   color: inherit;
   font: inherit;
   cursor: pointer;
-  border: 0;
+
+  border-radius: 0.5rem;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-lime-500);
+    outline-offset: 2px;
+  }
 }
 
 .currency-trader__select-button {
   padding: 10px;
   border-radius: 8px;
   background-color: var(--color-neutral-500);
+  border: 1px solid var(--color-neutral-400);
+  transition:
+    background-color 0.3s,
+    border-color 0.3s;
+
+  &:hover {
+    background-color: var(--color-neutral-400);
+  }
 
   .currency-trader__currency {
     font-size: 0.875rem; /* in px is 14px */
@@ -240,8 +283,8 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 0.75rem;
-  border-radius: 0.75rem;
-  border: 1px solid var(--color-neutral-300);
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-neutral-200);
 
   &:focus-within {
     border-color: var(--color-lime-500);
@@ -272,6 +315,15 @@
   list-style: none;
   max-height: 16rem;
   overflow-y: auto;
+
+  // Hide scroll bar
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  // Hide scroll bar for Firefox
+  scrollbar-width: none;
+  // Hide scroll bar for IE, Edge
+  -ms-overflow-style: none;
 }
 
 .currency-trader__section {
@@ -291,13 +343,17 @@
 
 .currency-trader__option {
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.75rem 0.5rem;
   border-radius: 0.5rem;
-  background: none;
+  background-color: var(--color-neutral-600);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--color-neutral-600);
+  transition: border-color 0.3s;
 
   &:hover,
   &:focus-visible {
-    background-color: var(--color-neutral-500);
+    border-color: var(--color-neutral-200);
   }
 
   .currency-trader__currency {
