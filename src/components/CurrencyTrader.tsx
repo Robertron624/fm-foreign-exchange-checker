@@ -29,32 +29,56 @@ function DashedBorder() {
 export default function CurrencyTrader() {
   const { rates, status, retry } = useLatestRates();
   const [amount, setAmount] = useState("1000");
+  const [receiveAmount, setReceiveAmount] = useState("");
   const [from, setFrom] = useState("USD");
   const [to, setTo] = useState("EUR");
   const { favorites, toggle } = useFavorites();
   const isFavorite = favorites.includes(pairKey(from, to));
   const { add: addLog } = useConversionLog();
 
-
-
   const currencies = Object.keys(rates).filter((c) => c in CURRENCY_FLAGS).sort((a, b) => a.localeCompare(b));
   const parsed = Number.parseFloat(amount);
+  const receiveParsed = Number.parseFloat(receiveAmount);
   const rateFrom = rates[from];
   const rateTo = rates[to];
+  
   const result =
     status === "ready" && Number.isFinite(parsed) && rateFrom > 0 && rateTo > 0
       ? (parsed / rateFrom) * rateTo
       : null;
-  const formatted =
-    result === null
-      ? "—"
-      : new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(
-          result,
-        );
+  
+  const reverseResult =
+    status === "ready" && Number.isFinite(receiveParsed) && rateFrom > 0 && rateTo > 0
+      ? (receiveParsed / rateTo) * rateFrom
+      : null;
+
+  const handleSendChange = (value: string) => {
+    setAmount(value);
+    setReceiveAmount("");
+  };
+
+  const handleReceiveChange = (value: string) => {
+    setReceiveAmount(value);
+    setAmount("");
+  };
+
+  let formatted: string;
+  if (receiveAmount && Number.isFinite(receiveParsed) && reverseResult !== null) {
+    formatted = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(reverseResult);
+  } else if (result === null) {
+    formatted = "—";
+  } else {
+    formatted = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(result);
+  }
 
   const handleLogConversion = () => {
-    if (result === null) return;
-    addLog({ from, to, amount: parsed, result });
+    if (receiveAmount && Number.isFinite(reverseResult) && reverseResult !== null) {
+      addLog({ from: to, to: from, amount: receiveParsed, result: reverseResult });
+    } else if (result === null) {
+      return;
+    } else {
+      addLog({ from, to, amount: parsed, result });
+    }
   };
 
   const swap = () => {
@@ -79,7 +103,7 @@ export default function CurrencyTrader() {
                 min="0"
                 value={amount}
                 aria-label="Amount to send"
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={(e) => handleSendChange(e.target.value)}
               />
             </div>
             <CurrencySelect
@@ -107,12 +131,15 @@ export default function CurrencyTrader() {
           <div className="currency-trader__row">
             <div className="currency-trader__field">
               <span className="currency-trader__label">RECEIVE</span>
-              <output
+              <input
                 className="currency-trader__amount received"
-                aria-live="polite"
-              >
-                {formatted}
-              </output>
+                type="number"
+                inputMode="decimal"
+                min="0"
+                value={receiveAmount || formatted}
+                aria-label="Amount to receive"
+                onChange={(e) => handleReceiveChange(e.target.value)}
+              />
             </div>
             <CurrencySelect
               value={to}

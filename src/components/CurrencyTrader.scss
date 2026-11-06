@@ -164,14 +164,12 @@
   &.received {
     color: var(--color-lime-500);
     max-width: 141px;
-    overflow-x: scroll;
 
-    // Hide scrollbar
     &::-webkit-scrollbar {
       display: none;
     }
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   &:focus-visible {
